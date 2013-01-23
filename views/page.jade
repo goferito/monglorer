@@ -1,0 +1,20 @@
+extends layout
+block body
+  #header.navbar.navbar-static-top
+    .navbar-inner
+      .container
+        a.brand(href='/') Monglorer
+  #page.container
+    .row
+      #menu.span2
+        script
+          $(document).ready(function(){
+            $("#menu li##{menu}").addClass('active');
+          });
+        ul.nav.nav-pills.nav-stacked
+          li#collections: a(href='/collections') Collections
+          li#documents: a(href='/documents') Documents
+          li#stats: a(href='/stats') Stats
+      #content.span10
+        block content
+

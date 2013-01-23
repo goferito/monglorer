@@ -1,0 +1,9 @@
+extends page
+block content
+  h1 Collections
+  .row
+    #collectionsList
+      h3 Collection List:
+      ul
+        - each coll in collections
+          li #{coll.name}
