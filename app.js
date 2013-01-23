@@ -28,13 +28,25 @@ app.get('/', function(req,res){ res.redirect('/collections'); });
 app.get('/collections', function(req, res){
     res.locals.menu = 'collections';
     mongoose.connection.db.collectionNames(function(err, names){
-        if(err) console.err(err);
-        else{
-            res.locals.collections = names;
-            res.render('collections');
-        }
+        res.locals.collections = [];
+        names.map(function(name){
+            var ns = name.name;
+            var cs = ns.substr(ns.indexOf('.')+1, ns.length);
+            mongoose.connection.db.collection(cs, function(err, collection){
+                if(err) console.error(err);
+                    collection.find().toArray(function(e,data){
+                        console.log(data.length);
+                        var coll = {name: cs,
+                                    numDocs: data.length};
+                        res.locals.collections.push(coll);
+                        if(names.length == res.locals.collections.length)
+                            res.render('collections');
+                });
+            });
+        });
     });
 });
+
 app.get('/documents', function(req,res){ 
     res.locals.menu = 'documents';
     res.render('documents'); 

@@ -4,6 +4,13 @@ block content
   .row
     #collectionsList
       h3 Collection List:
-      ul
-        - each coll in collections
-          li #{coll.name}
+      table.table.table-bordered.table-striped.table-hover
+        thead
+          tr
+            th Name
+            th Num Docs
+        tbody
+          - each coll in collections
+            tr
+              td #{coll.name}
+              td #{coll.numDocs}
